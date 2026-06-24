@@ -1,0 +1,22 @@
+[project]
+name = "task-tracker-cli"
+version = "1.0.0"
+description = "Система управления задачами с конечным автоматом и Excel-отчетами"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openpyxl>=3.1.2",
+    "sqlalchemy>=2.0.30",
+    "typer>=0.12.3",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.11.0",
+    "pytest>=9.1.1",
+    "types-openpyxl>=3.1.0.20241229",
+]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
