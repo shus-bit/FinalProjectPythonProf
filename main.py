@@ -221,7 +221,7 @@ def report_all(
     finally:
         session.close()
 
-@app.command("users_show")
+@app.command("users-show")
 def users_show(
         sort: str = typer.Option("id", "--sort", help="Критерий сортировки (id, name, role)")
 ) -> None:
