@@ -221,6 +221,39 @@ def report_all(
     finally:
         session.close()
 
+@app.command("users_show")
+def users_show(
+        sort: str = typer.Option("id", "--sort", help="Критерий сортировки (id, name, role)")
+) -> None:
+    """Посмотреть список всех добавленных пользователей."""
+    session = SessionLocal()
+    query = session.query(User)
+    #Отрабатываем параметр сортировки, который задекларирован в CLI
+    if sort == "name":
+        query = query.order_by(User.fullname)
+    elif sort == "role":
+        query = query.order_by(User.role)
+    else:
+        # Дефолтная сортировка (по id)
+        query = query.order_by(User.id)
+
+    users = query.all()
+    typer.echo(f"{'ID':<3} | {'Имя / ФИО сотрудника':<22} | {'Роль':<16}")
+    typer.echo("-" * 48)
+
+    for u in users:
+        user_id = str(u.id)
+        name_short = u.fullname[:22]
+        role_short = u.role[:16]
+
+        typer.echo(
+            f"{user_id:<3} | "
+            f"{name_short:<22} | "
+            f"{role_short:<16}"
+        )
+        typer.echo("-" * 48)
+
+    session.close()
 
 if __name__ == "__main__":
     app()
